@@ -1,19 +1,16 @@
-"""
-For a game with 8 tiles of blocks on a 3x3 grid,
-write down the Facts and Rules to model the game state 
-shown as the follows:
+﻿fact: (location tile1 pos2 pos2)
+fact: (location tile2 pos3 pos3)
+fact: (location tile3 pos2 pos3)
+fact: (location tile4 pos2 pos1)
+fact: (location tile5 pos1 pos1)
+fact: (location tile6 pos1 pos2)
+fact: (location tile7 pos1 pos3)
+fact: (location tile8 pos3 pos2)
+fact: (location empty pos3 pos1)
 
- y\\x   pos1     pos2     pos3
-     ┌────────┬────────┬────────┐
-pos1 │ tile5  │ tile4  │ empty  │
-     ├────────┼────────┼────────┤
-pos2 │ tile6  │ tile1  │ tile8  │
-     ├────────┼────────┼────────┤
-pos3 │ tile7  │ tile3  │ tile2  │
-     └────────┴────────┴────────┘
+rule: ((location ?piece1 ?x ?y) (location ?piece2 ?x pos2) -> (adjacent ?piece1 ?piece2))
+rule: ((location ?piece1 ?x ?y) (location ?piece2 pos2 ?y) -> (adjacent ?piece1 ?piece2))
 
-Example: 
-fact: (pred obj1 obj2)
-rule: ((pred obj1 obj2) (pred obj2 obj3)) -> (pred obj1 obj3)
+rule: ((adjacent ?piece1 ?piece2) -> (adjacent ?piece2 ?piece1))
 
-"""
+rule: ((location ?piece ?initialX ?initialY) (location empty ?targetx ?targety) (adjacent ?piece empty) -> (movable ?piece ?initialX ?initialY ?targetx ?targety))
